@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GoogleBooks</string>
+    <string name="menu_bottom_all_books">All books</string>
+    <string name="menu_bottom_favourite">Favourite</string>
+    <string name="menu_bottom_settings">Settings</string>
+    <string name="favorite">Favorite</string>
+</resources>
