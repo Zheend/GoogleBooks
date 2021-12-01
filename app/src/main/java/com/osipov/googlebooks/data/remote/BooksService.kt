@@ -8,7 +8,7 @@ import io.ktor.client.features.logging.*
 
 interface BooksService {
 
-    suspend fun getBooks(): List<BooksResponse>
+    suspend fun getBooks(query: String): BooksResponse
 
     companion object {
         fun create(): BooksService {
@@ -18,7 +18,10 @@ interface BooksService {
                         level = LogLevel.ALL
                     }
                     install(JsonFeature) {
-                        serializer = KotlinxSerializer()
+
+                        serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+                            ignoreUnknownKeys = true
+                        })
                     }
                 }
             )
