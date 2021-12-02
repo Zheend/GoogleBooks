@@ -1,21 +1,56 @@
 package com.osipov.googlebooks.ui.mainflow
 
+import android.os.Bundle
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.github.terrakok.cicerone.Navigator
+import com.github.terrakok.cicerone.NavigatorHolder
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.databinding.MainFlowFragmentBinding
+import com.osipov.googlebooks.di.mainFlowModule
 import com.osipov.googlebooks.ui.base.BaseFragment
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.ktx.moxyPresenter
+import toothpick.Scope
+import toothpick.Toothpick
+import javax.inject.Inject
 
 class MainFlowFragment : BaseFragment(R.layout.main_flow_fragment), MainFlowView {
 
-    @InjectPresenter
-    lateinit var mainFlowPresenter: MainFlowPresenter
-
-    @ProvidePresenter
-    fun provideMainFlowPresenter(): MainFlowPresenter = scope.getInstance(MainFlowPresenter::class.java)
-
+    private val mainFlowPresenter: MainFlowPresenter by moxyPresenter { scope.getInstance(MainFlowPresenter::class.java) }
     private val binding by viewBinding(MainFlowFragmentBinding::bind)
+
+    @Inject
+    lateinit var flowRouter: FlowRouter
+
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
+
+    private val navigator: Navigator by lazy {
+        object : FlowNavigator(requireActivity(), R.id.mainFlowContainer) {
+            override fun activityBack() {
+                flowRouter.exit()
+            }
+        }
+    }
+
+    override fun installModules(scope: Scope) {
+        super.installModules(scope)
+        scope.installModules(mainFlowModule())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Toothpick.inject(this, scope)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        navigatorHolder.removeNavigator()
+    }
 
     override fun setupBottomNavigation() {
         binding.mainBottomNavigation.setOnItemSelectedListener { item ->
@@ -26,22 +61,6 @@ class MainFlowFragment : BaseFragment(R.layout.main_flow_fragment), MainFlowView
             }
             true
         }
-    }
-
-    override fun setupViewPager() {
-        binding.containerMainFlow.adapter = MainFlowPageAdapter(childFragmentManager, lifecycle)
-    }
-
-    override fun onMenuAllClicked() {
-        binding.containerMainFlow.setCurrentItem(MainFlowScreens.ALL_BOOKS.value, false)
-    }
-
-    override fun onMenuFavoriteClicked() {
-        binding.containerMainFlow.setCurrentItem(MainFlowScreens.FAVORITE.value, false)
-    }
-
-    override fun onMenuSettingsClicked() {
-        binding.containerMainFlow.setCurrentItem(MainFlowScreens.SETTINGS.value, false)
     }
 
 }

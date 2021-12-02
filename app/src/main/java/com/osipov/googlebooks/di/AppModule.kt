@@ -2,7 +2,6 @@ package com.osipov.googlebooks.di
 
 import android.content.Context
 import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.osipov.googlebooks.data.remote.BooksService
@@ -19,4 +18,5 @@ fun appModule(context: Context) = module {
 
     //Api
     bind(BooksService::class.java).toInstance(BooksService.create())
+
 }

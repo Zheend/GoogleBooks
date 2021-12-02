@@ -8,8 +8,7 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.di.DI
 import moxy.MvpAppCompatActivity
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.ktx.moxyPresenter
 import toothpick.Toothpick
 import javax.inject.Inject
 
@@ -21,19 +20,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
-    @InjectPresenter
-    lateinit var mainPresenter: MainPresenter
+    private val presenter: MainPresenter by moxyPresenter {
+        Toothpick.openScope(DI.APP_SCOPE).getInstance(MainPresenter::class.java)
+    }
 
     private val navigator: Navigator by lazy {
-        object : AppNavigator(this, R.id.mainContainer) {
+        object : AppNavigator(this, R.id.mainContainer, supportFragmentManager) {
             override fun activityBack() {
                 router.exit()
             }
         }
     }
-
-    @ProvidePresenter
-    fun provideMainPresenter(): MainPresenter = Toothpick.openScope(DI.APP_SCOPE).getInstance(MainPresenter::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Toothpick.inject(this, Toothpick.openScope(DI.APP_SCOPE))
@@ -45,4 +42,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onResume()
         navigatorHolder.setNavigator(navigator)
     }
+
+    override fun onPause() {
+        super.onPause()
+        navigatorHolder.removeNavigator()
+    }
+
 }
