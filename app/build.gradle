@@ -78,4 +78,8 @@ dependencies {
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.2'
 
     implementation "io.coil-kt:coil:1.4.0"
+
+    implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.1'
+    implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
+
 }

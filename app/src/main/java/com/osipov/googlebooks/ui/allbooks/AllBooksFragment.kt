@@ -19,21 +19,24 @@ class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView
         scope.getInstance(AllBooksPresenter::class.java)
     }
 
+    private val adapter by lazy {
+        MainBooksAdapter() { link ->
+            allBooksPresenter.openBookLinkIntoBrowser(link)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             etSearch.addTextChangedListener {
                 allBooksPresenter.searchBooks(it.toString())
             }
-            rvResultSearchBooks.adapter = AllBooksAdapter()
-            (binding.rvResultSearchBooks.adapter as AllBooksAdapter).bookLinkClicked = {
-                allBooksPresenter.openBookLinkIntoBrowser(it)
-            }
+            rvResultSearchBooks.adapter = adapter
         }
     }
 
     override fun setBooks(books: List<Item>) {
-        (binding.rvResultSearchBooks.adapter as AllBooksAdapter).submitList(books)
+        adapter.items = books
     }
 
     override fun showState(isEmptyQuery: Boolean) {
