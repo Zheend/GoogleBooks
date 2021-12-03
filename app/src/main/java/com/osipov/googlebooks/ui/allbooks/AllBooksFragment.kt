@@ -9,18 +9,15 @@ import com.osipov.googlebooks.R
 import com.osipov.googlebooks.data.remote.Item
 import com.osipov.googlebooks.databinding.AllBooksFragmentBinding
 import com.osipov.googlebooks.ui.base.BaseFragment
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.ktx.moxyPresenter
 
 class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView {
 
     private val binding by viewBinding(AllBooksFragmentBinding::bind)
 
-    @InjectPresenter
-    lateinit var allBooksPresenter: AllBooksPresenter
-
-    @ProvidePresenter
-    fun provideAllBooksPresenter(): AllBooksPresenter = scope.getInstance(AllBooksPresenter::class.java)
+    private val allBooksPresenter: AllBooksPresenter by moxyPresenter {
+        scope.getInstance(AllBooksPresenter::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +25,10 @@ class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView
             etSearch.addTextChangedListener {
                 allBooksPresenter.searchBooks(it.toString())
             }
-            rvResultSearchBooks.adapter = AllBooksAdapter(requireContext())
+            rvResultSearchBooks.adapter = AllBooksAdapter()
+            (binding.rvResultSearchBooks.adapter as AllBooksAdapter).bookLinkClicked = {
+                allBooksPresenter.openBookLinkIntoBrowser(it)
+            }
         }
     }
 

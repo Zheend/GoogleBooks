@@ -4,6 +4,7 @@ import android.os.Bundle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.databinding.MainFlowFragmentBinding
 import com.osipov.googlebooks.di.mainFlowModule
@@ -34,7 +35,7 @@ class MainFlowFragment : BaseFragment(R.layout.main_flow_fragment), MainFlowView
 
     override fun installModules(scope: Scope) {
         super.installModules(scope)
-        scope.installModules(mainFlowModule())
+        scope.installModules(mainFlowModule(scope.getInstance(Router::class.java)))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

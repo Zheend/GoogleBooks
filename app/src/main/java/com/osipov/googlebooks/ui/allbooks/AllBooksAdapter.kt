@@ -1,9 +1,6 @@
 package com.osipov.googlebooks.ui.allbooks
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -21,9 +18,9 @@ import com.osipov.googlebooks.R
 import com.osipov.googlebooks.data.remote.Item
 import com.osipov.googlebooks.databinding.BookItemBinding
 
-class AllBooksAdapter(
-    private val context: Context
-) : ListAdapter<Item, AllBooksViewHolder>(diffUtil) {
+class AllBooksAdapter : ListAdapter<Item, AllBooksAdapter.AllBooksViewHolder>(diffUtil) {
+
+    var bookLinkClicked: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllBooksViewHolder {
         val binding: BookItemBinding = BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -34,25 +31,26 @@ class AllBooksAdapter(
         holder.bind(getItem(position))
     }
 
-}
+    inner class AllBooksViewHolder(private val binding: BookItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-class AllBooksViewHolder(private val binding: BookItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(book: Item) {
-        with(binding) {
-            smallThumbnail.load(book.volumeInfo.imageLinks?.smallThumbnail) {
-                fallback(R.drawable.ic_error)
-            }
-            bookTitle.text = book.volumeInfo.title
-            bookAuthor.text = book.volumeInfo.authors?.firstOrNull() ?: "No author"
-            bookLink.apply {
-                text = book.volumeInfo.previewLink
-                makeClickable {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("$text"))
-                    context.startActivity(intent)
+        fun bind(book: Item) {
+            with(binding) {
+                smallThumbnail.load(book.volumeInfo.imageLinks?.smallThumbnail) {
+                    fallback(R.drawable.ic_error)
+                }
+                bookTitle.text = book.volumeInfo.title
+                bookAuthor.text = book.volumeInfo.authors?.firstOrNull() ?: "No author"
+                bookLink.apply {
+                    text = book.volumeInfo.previewLink
+                    makeClickable {
+//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("$text"))
+//                    context.startActivity(intent)
+                        bookLinkClicked?.invoke(text.toString())
+                    }
                 }
             }
         }
+
     }
 
 }
