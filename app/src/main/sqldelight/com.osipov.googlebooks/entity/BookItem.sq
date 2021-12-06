@@ -1,0 +1,30 @@
+CREATE TABLE BookTable (
+    title TEXT NOT NULL UNIQUE PRIMARY KEY,
+    image TEXT NOT NULL,
+    link TEXT
+);
+
+selectAll:
+SELECT *
+FROM BookTable;
+
+insertOrReplace:
+INSERT OR REPLACE INTO BookTable(
+  title,
+  image,
+  link
+)
+VALUES (?, ?, ?);
+
+selectByTitle:
+SELECT *
+FROM BookTable
+WHERE title = ?;
+
+empty:
+DELETE FROM BookTable;
+
+deleteByLabel:
+DELETE
+FROM BookTable
+WHERE title = ?;

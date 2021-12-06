@@ -1,5 +1,7 @@
 package com.osipov.googlebooks.ui.allbooks
 
+import com.osipov.googlebooks.data.remote.Item
+import com.osipov.googlebooks.domain.AddToFavoriteUseCase
 import com.osipov.googlebooks.domain.SearchBooksUseCase
 import com.osipov.googlebooks.ui.Screens
 import com.osipov.googlebooks.ui.base.BasePresenter
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @InjectViewState
 class AllBooksPresenter @Inject constructor(
     private val searchBooksUseCase: SearchBooksUseCase,
+    private val addToFavoriteUseCase: AddToFavoriteUseCase,
     private val flowRouter: FlowRouter
 ) : BasePresenter<AllBooksView>() {
 
@@ -44,6 +47,12 @@ class AllBooksPresenter @Inject constructor(
 
     fun openBookLinkIntoBrowser(link: String) {
         flowRouter.navigate(Screens.BrowserScreen(link))
+    }
+
+    fun addToFavorite(book: Item) {
+        presenterScope.launch {
+            addToFavoriteUseCase.addToFavorite(book)
+        }
     }
 
 }

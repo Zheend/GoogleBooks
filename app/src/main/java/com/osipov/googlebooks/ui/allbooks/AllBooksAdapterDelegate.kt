@@ -11,31 +11,68 @@ import android.widget.TextView
 import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.osipov.googlebooks.R
+import com.osipov.googlebooks.data.local.Book
 import com.osipov.googlebooks.data.remote.Item
 import com.osipov.googlebooks.databinding.BookItemBinding
 
-fun allBooksAdapterDelegate(itemClick: ((String) -> Unit)) = adapterDelegateViewBinding<Item, Any, BookItemBinding>(
-    { layoutInflater, parent ->
-        BookItemBinding.inflate(layoutInflater, parent, false)
-    }
-) {
-    bind {
-        with(binding) {
-            smallThumbnail.load(item.volumeInfo.imageLinks?.smallThumbnail) {
-                fallback(R.drawable.ic_error)
-            }
-            bookTitle.text = item.volumeInfo.title
-            bookAuthor.text = item.volumeInfo.authors?.firstOrNull() ?: "No author"
-            bookLink.apply {
-                text = item.volumeInfo.previewLink
-                makeClickable {
-                    itemClick.invoke(text.toString())
+fun allBooksAdapterDelegate(itemClick: ((String) -> Unit), favoriteClick: ((Item) -> Unit)) =
+    adapterDelegateViewBinding<Item, Any, BookItemBinding>(
+        { layoutInflater, parent ->
+            BookItemBinding.inflate(layoutInflater, parent, false)
+        }
+    ) {
+        bind {
+            with(binding) {
+                smallThumbnail.load(item.volumeInfo.imageLinks?.smallThumbnail) {
+                    fallback(R.drawable.ic_error)
+                }
+                bookTitle.text = item.volumeInfo.title
+                bookAuthor.text = item.volumeInfo.authors?.firstOrNull() ?: "No author"
+                bookLink.apply {
+                    text = item.volumeInfo.previewLink
+                    makeClickable {
+                        itemClick.invoke(text.toString())
+                    }
+                }
+                ivFavoriteBook.apply {
+                    getDrawable(R.drawable.ic_favorite_disabled)
+                    setOnClickListener {
+                        favoriteClick(item)
+                    }
                 }
             }
         }
     }
 
-}
+fun favoriteBooksAdapterDelegate(itemClick: ((String) -> Unit), favoriteClick: (Book) -> Unit) =
+    adapterDelegateViewBinding<Book, Any, BookItemBinding>(
+        { layoutInflater, parent ->
+            BookItemBinding.inflate(layoutInflater, parent, false)
+        }
+    ) {
+
+        bind {
+            with(binding) {
+                smallThumbnail.load(item.image) {
+                    fallback(R.drawable.ic_error)
+                }
+                bookTitle.text = item.title
+                bookAuthor.text = item.title
+                bookLink.apply {
+                    text = item.link
+                    makeClickable {
+                        itemClick.invoke(text.toString())
+                    }
+                }
+                ivFavoriteBook.apply {
+                    setImageDrawable(getDrawable(R.drawable.ic_favorite_enabled))
+                    setOnClickListener {
+                        favoriteClick(item)
+                    }
+                }
+            }
+        }
+    }
 
 fun TextView.makeClickable(action: () -> Unit) {
     val text = this.text.toString()

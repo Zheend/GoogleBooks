@@ -6,7 +6,7 @@ import com.osipov.googlebooks.di.appModule
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()

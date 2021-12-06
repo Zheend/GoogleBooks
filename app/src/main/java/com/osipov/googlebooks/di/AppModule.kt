@@ -4,7 +4,10 @@ import android.content.Context
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+import com.osipov.googlebooks.Database
 import com.osipov.googlebooks.data.remote.BooksService
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import com.squareup.sqldelight.db.SqlDriver
 import toothpick.ktp.binding.module
 
 fun appModule(context: Context) = module {
@@ -18,5 +21,14 @@ fun appModule(context: Context) = module {
 
     //Api
     bind(BooksService::class.java).toInstance(BooksService.create())
+
+    //Database
+    bind(SqlDriver::class.java).toInstance(
+        AndroidSqliteDriver(
+            schema = Database.Schema,
+            context = context,
+            name = "books_sqldelight.db"
+        )
+    )
 
 }

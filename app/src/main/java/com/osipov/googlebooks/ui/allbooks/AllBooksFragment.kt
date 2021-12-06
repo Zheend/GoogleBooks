@@ -20,9 +20,14 @@ class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView
     }
 
     private val adapter by lazy {
-        MainBooksAdapter() { link ->
-            allBooksPresenter.openBookLinkIntoBrowser(link)
-        }
+        MainBooksAdapter(
+            itemClick = { link ->
+                allBooksPresenter.openBookLinkIntoBrowser(link)
+            },
+            favoriteClick = { book ->
+                allBooksPresenter.addToFavorite(book)
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
