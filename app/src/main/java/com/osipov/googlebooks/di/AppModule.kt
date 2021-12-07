@@ -5,7 +5,7 @@ import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.osipov.googlebooks.Database
-import com.osipov.googlebooks.data.remote.BooksService
+import com.osipov.googlebooks.data.ds.BooksService
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import toothpick.ktp.binding.module

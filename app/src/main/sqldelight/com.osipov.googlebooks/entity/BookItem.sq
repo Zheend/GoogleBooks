@@ -1,6 +1,7 @@
 CREATE TABLE BookTable (
     title TEXT NOT NULL UNIQUE PRIMARY KEY,
     image TEXT NOT NULL,
+    author TEXT NOT NULL,
     link TEXT
 );
 
@@ -12,9 +13,10 @@ insertOrReplace:
 INSERT OR REPLACE INTO BookTable(
   title,
   image,
+  author,
   link
 )
-VALUES (?, ?, ?);
+VALUES (?, ?, ?, ?);
 
 selectByTitle:
 SELECT *
