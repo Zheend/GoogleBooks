@@ -3,12 +3,11 @@ package com.osipov.googlebooks.utils
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import com.osipov.googlebooks.utils.FlowCommand
 import javax.inject.Inject
 
 class FlowRouter @Inject constructor(
     private val appRouter: Router
-): Router() {
+) : Router() {
 
     fun navigateFlow(screen: FragmentScreen) {
         executeCommands(FlowCommand(screen))
@@ -21,4 +20,5 @@ class FlowRouter @Inject constructor(
     fun back() {
         appRouter.finishChain()
     }
+
 }

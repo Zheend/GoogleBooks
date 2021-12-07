@@ -1,0 +1,1 @@
+ALTER TABLE BookTable ADD COLUMN author TEXT NOT NULL;

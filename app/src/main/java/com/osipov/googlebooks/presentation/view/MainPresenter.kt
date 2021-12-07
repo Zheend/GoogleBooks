@@ -1,8 +1,8 @@
 package com.osipov.googlebooks.presentation.view
 
 import com.github.terrakok.cicerone.Router
-import com.osipov.googlebooks.screens.Screens
 import com.osipov.googlebooks.presentation.base.BasePresenter
+import com.osipov.googlebooks.screens.Screens
 import moxy.InjectViewState
 import javax.inject.Inject
 

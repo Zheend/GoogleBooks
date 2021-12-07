@@ -7,9 +7,9 @@ import coil.load
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.databinding.DetailsBookFragmentBinding
 import com.osipov.googlebooks.domain.model.BookEntity
-import com.osipov.googlebooks.presentation.allbooks.makeClickable
 import com.osipov.googlebooks.presentation.base.BaseFragment
 import com.osipov.googlebooks.presentation.presenter.DetailsBookPresenter
+import com.osipov.googlebooks.utils.makeClickable
 import moxy.ktx.moxyPresenter
 
 class DetailsBookFragment : BaseFragment(R.layout.details_book_fragment), DetailsBookView {

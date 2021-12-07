@@ -3,9 +3,9 @@ package com.osipov.googlebooks.presentation.presenter
 import com.osipov.googlebooks.domain.interactor.BooksInteractor
 import com.osipov.googlebooks.domain.model.BookEntity
 import com.osipov.googlebooks.presentation.base.BasePresenter
-import com.osipov.googlebooks.utils.FlowRouter
 import com.osipov.googlebooks.presentation.view.AllBooksView
 import com.osipov.googlebooks.screens.Screens
+import com.osipov.googlebooks.utils.FlowRouter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged

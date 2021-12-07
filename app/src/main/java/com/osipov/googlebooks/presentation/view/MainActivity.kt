@@ -7,7 +7,6 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.di.DI
-import com.osipov.googlebooks.presentation.base.BaseFragment
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import toothpick.Toothpick

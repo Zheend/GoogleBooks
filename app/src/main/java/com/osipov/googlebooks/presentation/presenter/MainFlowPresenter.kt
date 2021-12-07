@@ -1,9 +1,9 @@
 package com.osipov.googlebooks.presentation.presenter
 
-import com.osipov.googlebooks.screens.Screens
 import com.osipov.googlebooks.presentation.base.BasePresenter
-import com.osipov.googlebooks.utils.FlowRouter
 import com.osipov.googlebooks.presentation.view.MainFlowView
+import com.osipov.googlebooks.screens.Screens
+import com.osipov.googlebooks.utils.FlowRouter
 import moxy.InjectViewState
 import javax.inject.Inject
 
