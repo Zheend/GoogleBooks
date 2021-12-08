@@ -2,6 +2,7 @@ package com.osipov.googlebooks.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -47,6 +48,7 @@ class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView
 
     override fun setBooks(books: List<BookEntity>) {
         adapter.items = books
+        adapter.notifyDataSetChanged()
     }
 
     override fun showState(isEmptyQuery: Boolean) {
@@ -54,6 +56,10 @@ class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView
             rvResultSearchBooks.isVisible = !isEmptyQuery
             emptyState.isVisible = isEmptyQuery
         }
+    }
+
+    override fun setToast(message: String) {
+        Toast.makeText(requireContext(), "Error occurred $message", Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -15,7 +15,8 @@ class BooksDtoToEntityMapper @Inject constructor() {
                     title = it.volumeInfo.title,
                     image = it.volumeInfo.imageLinks?.smallThumbnail ?: "",
                     author = it.volumeInfo.authors?.getOrNull(0) ?: "",
-                    link = it.volumeInfo.previewLink
+                    link = it.volumeInfo.previewLink,
+                    isFavorite = false
                 )
             )
         }
@@ -30,7 +31,8 @@ class BooksDtoToEntityMapper @Inject constructor() {
         title = bookTable.title,
         image = bookTable.image,
         author = bookTable.author,
-        link = bookTable.link.orEmpty()
+        link = bookTable.link.orEmpty(),
+        isFavorite = true
     )
 
 }

@@ -30,10 +30,17 @@ fun booksAdapterDelegate(
                 }
             }
             ivFavoriteBook.apply {
-                getDrawable(R.drawable.ic_favorite_disabled)
                 setOnClickListener {
                     favoriteClick(item)
+                    item.isFavorite = !item.isFavorite
+                    this@adapterDelegateViewBinding.bindingAdapter?.notifyItemChanged(absoluteAdapterPosition)
                 }
+                setImageDrawable(
+                    getDrawable(
+                        if (item.isFavorite) R.drawable.ic_favorite_enabled
+                        else R.drawable.ic_favorite_disabled
+                    )
+                )
             }
             root.setOnClickListener {
                 showDetails(item)

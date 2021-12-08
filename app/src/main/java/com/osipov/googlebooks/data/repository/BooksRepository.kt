@@ -23,6 +23,8 @@ class BooksRepository @Inject constructor(
 
     suspend fun addToFavorite(book: BookEntity) = booksDao.upsert(book)
 
+    suspend fun getBookByTitleLocal(book: BookEntity) = booksDao.selectByTitle(book)
+
     suspend fun deleteBook(book: BookEntity) = booksDao.deleteBook(book)
 
     suspend fun deleteAllFavoriteBook() = booksDao.deleteAll()

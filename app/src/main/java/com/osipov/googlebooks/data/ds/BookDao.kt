@@ -36,6 +36,11 @@ class BooksDao @Inject constructor(
         )
     }
 
+    suspend fun selectByTitle(book: BookEntity) : Boolean {
+        val result = bookEntityQuery.selectByTitle(book.title).executeAsOneOrNull()
+        return result != null
+    }
+
     suspend fun deleteAll() {
         bookEntityQuery.empty()
     }

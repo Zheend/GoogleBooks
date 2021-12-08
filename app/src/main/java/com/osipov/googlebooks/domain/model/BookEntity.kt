@@ -8,5 +8,6 @@ class BookEntity(
     val title: String,
     val image: String,
     val author: String,
-    val link: String
+    val link: String,
+    var isFavorite: Boolean
 ) : Parcelable

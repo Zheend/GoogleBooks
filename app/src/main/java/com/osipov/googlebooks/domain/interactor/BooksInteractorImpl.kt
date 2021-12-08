@@ -15,12 +15,18 @@ class BooksInteractorImpl @Inject constructor(
     override fun getFavoriteBooks(): Flow<List<BookEntity>> = repository.getBookFromLocal().flowOn(Dispatchers.IO)
 
     override suspend fun getBooksByQuery(query: String): List<BookEntity> = withContext(Dispatchers.IO) {
-        repository.getBooksByQuery(query)
+        repository.getBooksByQuery(query).map {
+            it.isFavorite = repository.getBookByTitleLocal(it)
+            it
+        }
     }
 
     override suspend fun addToFavorite(book: BookEntity) = withContext(Dispatchers.IO) {
-
-        repository.addToFavorite(book)
+        if (repository.getBookByTitleLocal(book)) {
+            repository.deleteBook(book)
+        } else {
+            repository.addToFavorite(book)
+        }
     }
 
     override suspend fun deleteFavoriteBook(book: BookEntity) = withContext(Dispatchers.IO) {

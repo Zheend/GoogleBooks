@@ -32,9 +32,14 @@ class AllBooksPresenter @Inject constructor(
                     if (query.isBlank()) {
                         viewState.showState(true)
                     } else {
-                        val result = booksInteractor.getBooksByQuery(query)
-                        viewState.setBooks(result)
-                        viewState.showState(false)
+                        try {
+                            val result = booksInteractor.getBooksByQuery(query)
+                            viewState.setBooks(result)
+                            viewState.showState(false)
+                        } catch (e: Exception) {
+                            viewState.setToast(e.localizedMessage ?: "")
+                        }
+
                     }
                 }
         }
