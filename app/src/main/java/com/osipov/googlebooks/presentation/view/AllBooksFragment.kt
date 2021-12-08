@@ -8,9 +8,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.osipov.googlebooks.R
 import com.osipov.googlebooks.databinding.AllBooksFragmentBinding
 import com.osipov.googlebooks.domain.model.BookEntity
-import com.osipov.googlebooks.presentation.adapter.MainBooksAdapter
 import com.osipov.googlebooks.presentation.base.BaseFragment
 import com.osipov.googlebooks.presentation.presenter.AllBooksPresenter
+import com.osipov.googlebooks.utils.MainBooksAdapter
 import moxy.ktx.moxyPresenter
 
 class AllBooksFragment : BaseFragment(R.layout.all_books_fragment), AllBooksView {

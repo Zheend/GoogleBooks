@@ -1,14 +1,13 @@
-package com.osipov.googlebooks.data.model
+package com.osipov.googlebooks.data.ds
 
 import com.osipov.googlebooks.Database
 import com.osipov.googlebooks.domain.model.BookEntity
-import com.osipov.googlebooks.utils.toBookList
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
+import comosipovgooglebooks.entity.BookTable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,13 +19,13 @@ class BooksDao @Inject constructor(
 
     private val bookEntityQuery = Database(sqlDriver).bookItemQueries
 
-    val allBooks: Flow<List<BookEntity>>
+    val allBooks: Flow<List<BookTable>>
         get() = bookEntityQuery
             .selectAll()
             .asFlow()
             .map { query ->
-                query.executeAsList().toBookList()
-            }.flowOn(Dispatchers.IO)
+                query.executeAsList()
+            }
 
     suspend fun upsert(book: BookEntity) {
         bookEntityQuery.insertOrReplace(

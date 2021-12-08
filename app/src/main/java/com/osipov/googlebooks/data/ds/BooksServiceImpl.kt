@@ -12,7 +12,6 @@ class BooksServiceImpl @Inject constructor(
         return client.get {
             url(HttpRoutes.BOOKS)
             parameter("q", "$query+$SEARCH_TYPE")
-//            parameter("key", "AIzaSyAXFfEU6Veq9aDTv8q9jdJaxKOaP5aqcbE")
         }
     }
 }
